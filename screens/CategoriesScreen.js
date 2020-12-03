@@ -1,15 +1,12 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  FlatList,
-} from "react-native";
-
-import { CATEGORIES } from "../data/dummy-data";
+import { FlatList } from "react-native";
 
 import CategoryGridTile from "../components/CategoryGridTile";
+
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import CustomHeaderButton from "../components/CustomHeaderButton";
+
+import { CATEGORIES } from "../data/dummy-data";
 
 const CategoriesScreen = (props) => {
   const renderGridItem = (itemData) => {
@@ -39,10 +36,21 @@ const CategoriesScreen = (props) => {
   );
 };
 
-CategoriesScreen.navigationOptions = {
-  headerTitle: "Meal Categories",
+CategoriesScreen.navigationOptions = (navData) => {
+  return {
+    headerTitle: "Meal Categories",
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+        <Item
+          title="Menu"
+          iconName="ios-menu"
+          onPress={() => {
+            navData.navigation.toggleDrawer();
+          }}
+        />
+      </HeaderButtons>
+    ),
+  };
 };
 
 export default CategoriesScreen;
-
-const styles = StyleSheet.create({});

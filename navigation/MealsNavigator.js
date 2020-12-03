@@ -5,6 +5,7 @@ import { Platform } from "react-native";
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
+import { createDrawerNavigator } from "react-navigation-drawer";
 
 // Android material bottom navigation
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
@@ -14,6 +15,7 @@ import CategoriesScreen from "../screens/CategoriesScreen";
 import CategoryMealsScreen from "../screens/CategoryMealsScreen";
 import MealDetailScreen from "../screens/MealDetailScreen";
 import FavoritesScreen from "../screens/FavoritesScreen";
+import FiltersScreen from "../screens/FiltersScreen";
 
 import Colors from "../constants/colors";
 
@@ -92,4 +94,38 @@ const MealsFavTabNavigator =
         },
       });
 
-export default createAppContainer(MealsFavTabNavigator);
+const FiltersScreenNavigator = createStackNavigator(
+  {
+    Filters: FiltersScreen,
+  },
+  {
+    defaultNavigationOptions: defaultStackNavOptions,
+  }
+);
+
+const MainNavigator = createDrawerNavigator(
+  {
+    MealsFavs: {
+      screen: MealsFavTabNavigator,
+      navigationOptions: {
+        drawerLabel: "Meals",
+      },
+    },
+    Filters: {
+      screen: FiltersScreenNavigator,
+      navigationOptions: {
+        drawerLabel: "Filters",
+      },
+    },
+  },
+  {
+    contentOptions: {
+      activeTintColor: Colors.secondaryColor,
+      labelStyle: {
+        fontFamily: "open-sans",
+      },
+    },
+  }
+);
+
+export default createAppContainer(MainNavigator);
